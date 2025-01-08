@@ -88,6 +88,7 @@ function Individual_Users_Documents_Table(Apartment_Name) {
     Document_Name VARCHAR(255) NOT NULL,
     Document_Type VARCHAR(255) NOT NULL,
     Flat_number INT DEFAULT NULL,
+    s3_link VARCHAR(255) Default NULL,
     Uploaded_by INT DEFAULT NULL,
     Document_Upload_at TIMESTAMP NOT NULL,
     Modified_by JSONB DEFAULT NULL,
