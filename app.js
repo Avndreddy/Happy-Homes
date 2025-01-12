@@ -7,8 +7,9 @@ require("dotenv").config();
 
 // Import Routes
 const initialRoute=require('./Routes/Initial');
-const createCommitteeMember=require('./Routes/Committee_Member/CommitteeMember')
-const createFile= require('./Routes/Committee_Member/SampleUpload')
+const createCommitteeMember=require('./Routes/Committee_Member/CommitteeMember');
+const createFile= require('./SampleUpload');
+const Notice_Board= require('./Routes/Committee_Member/NoticeBoard');
 
 // Middlewares
 app.use(express.json());
@@ -27,6 +28,7 @@ const db = new Pool({
 app.use('/api' ,initialRoute);
 app.use('/api',createCommitteeMember)
 app.use('/api',createFile)
+app.use('/api', Notice_Board)
 
 // Start or Server Listening
 app.listen(process.env.Server_Port || 5000, () => {

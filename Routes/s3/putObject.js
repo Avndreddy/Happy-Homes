@@ -9,12 +9,12 @@ const s3 = new AWS.S3({
 });
 
 // Generate a presigned Put Object URL
-async function getPreSignedURL(keyPath, contentType) {
+async function getPreSignedURL(keyPath, documentType ,contentType) {
   console.log("entered", keyPath, contentType);
   const bucket_params = {
     Bucket: process.env.bucketName,
-    Key: `uploads/${keyPath}`,
-    Expires: 120, // 2min
+    Key: `${documentType}/${keyPath}`,
+    Expires: 300, // 5 minutes Expiration time
     ContentType: contentType,
   };
   try {

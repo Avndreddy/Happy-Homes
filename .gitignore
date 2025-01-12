@@ -2,3 +2,4 @@
 /.env
 /InitialDBCreation.sql
 /Test_app.js
+/SampleUpload.js
