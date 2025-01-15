@@ -8,8 +8,11 @@ require("dotenv").config();
 // Import Routes
 const initialRoute=require('./Routes/Initial');
 const createCommitteeMember=require('./Routes/Committee_Member/CommitteeMember');
+const User = require('./Routes/Committee_Member/User');
 const createFile= require('./SampleUpload');
 const Notice_Board= require('./Routes/Committee_Member/NoticeBoard');
+const Compalints_Board = require('./Routes/ComplaintsBoard');
+const Funds = require('./Routes/Committee_Member/Create_Funds');
 
 // Middlewares
 app.use(express.json());
@@ -27,8 +30,11 @@ const db = new Pool({
 // Routes
 app.use('/api' ,initialRoute);
 app.use('/api',createCommitteeMember)
+app.use('/api', User);
 app.use('/api',createFile)
 app.use('/api', Notice_Board)
+app.use('/api', Compalints_Board);
+app.use('/api', Funds);
 
 // Start or Server Listening
 app.listen(process.env.Server_Port || 5000, () => {

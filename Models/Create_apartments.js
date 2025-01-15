@@ -72,7 +72,7 @@ function Individual_Apartment_Committee_Member_Table(Apartment_Name) {
     Member_Password VARCHAR(255) NOT NULL);`;
 }
 
-function insert_into_Apartment_Committee_Member_Table(Apartment_Name){
+function insert_into_Apartment_Committee_Member_Table(Apartment_Name) {
   return `INSERT INTO ${Apartment_Name}.Committee_Member (User_Id, Member_Name, Member_Role, 
   Member_Permissions, Member_since, Member_until, Member_status, Member_Password
   ) 
@@ -107,7 +107,7 @@ function Notice_Board_Table(Apartment_Name) {
     Notice_Priority VARCHAR(255) NOT NULL,
     Created_by INT NOT NULL,
     Created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    Attachemnt_url JSONB DEFAULT NULL,
+    Attachment_Details JSONB DEFAULT NULL,
     CONSTRAINT fk_noticeboard_created_by  FOREIGN KEY (Created_by) REFERENCES ${Apartment_Name}.Committee_Member(Committee_Member_Id)
 );`;
 }

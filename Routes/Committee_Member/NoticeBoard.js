@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../dbconnect");
 
+// Create a New Notice
 router.post("/create-notice/:id", async (req, res) => {
   const { id } = req.params;
   const {
@@ -51,6 +52,8 @@ router.post("/create-notice/:id", async (req, res) => {
   }
 });
 
+
+// Get Notice by ID
 router.get("/get-notice/:id", async (req, res) => {
   const { id } = req.params;
   const Apartment_Name = req.body.Apartment_Name;
@@ -64,6 +67,7 @@ router.get("/get-notice/:id", async (req, res) => {
   }
 });
 
+// Get All Notice
 router.get("/get-all-notice", async (req, res) => {
   const Apartment_Name = req.body.Apartment_Name;
   const query = `SELECT * FROM ${Apartment_Name}.notice_board`;
@@ -73,6 +77,52 @@ router.get("/get-all-notice", async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
+  }
+});
+
+// Update a Notice by Id
+router.put("/update-notice/:id/:cid", async (req, res) => {
+  const { id, cid } = req.params;
+  const {
+    notice_title,
+    notice_description,
+    notice_type,
+    notice_priority,
+    Apartment_Name,
+  } = req.body;
+  const created_by = cid;
+  let keys = [];
+  let values = [];
+  const fields = {
+    notice_title: notice_title,
+    notice_description: notice_description,
+    notice_type: notice_type,
+    notice_priority: notice_priority,
+    created_by: created_by,
+  };
+
+  Object.entries(fields).forEach(([key, value]) => {
+    if (value !== undefined) {
+      keys.push(`${key} = $${keys.length + 1}`);
+      values.push(value);
+    }
+  });
+  
+  const querry = `Update ${Apartment_Name}.notice_board set ${keys.join(
+    ", "
+  )} where notice_id = ${id} returning *`;
+ 
+  try {
+    const result = await db.query(querry, values);
+    return res.json(result.rows[0]);
+  } catch (error) {
+    console.log(error);
+    if(error.constraint == 'fk_noticeboard_created_by'){
+        return res.status(500).send("There is no such Committee Member");
+    }else{
+        return res.status(500).json(error);
+    }
+    
   }
 });
 
