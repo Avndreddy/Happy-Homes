@@ -157,13 +157,13 @@ function User_Payments(Apartment_Name) {
     Fund_Type_Id INT NOT NULL,
     User_Id INT NOT NULL,
     Transaction_Id VARCHAR(255) NOT NULL,
-    Payment_Document_Id VARCHAR(255) NULL,
+    Payment_Document_Id INT DEFAULT NULL,
     Payment_Method VARCHAR(255) NOT NULL,
     Payment_Date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     Payment_Amount DECIMAL(10,2) NOT NULL,
     Payment_Status VARCHAR(255) NOT NULL,
     Payment_Comment VARCHAR(255) NOT NULL,
-    Payment_Reviewed_By INT NOT NULL,
+    Payment_Reviewed_By INT DEFAULT NULL,
     Payment_Action_Status BOOLEAN DEFAULT FALSE,
     CONSTRAINT fk_user_payments_reviewed_by FOREIGN KEY (Payment_Reviewed_By) REFERENCES ${Apartment_Name}.Committee_Member(Committee_Member_Id),
     CONSTRAINT fk_user_payments_fund_type_id FOREIGN KEY (Fund_Type_Id) REFERENCES ${Apartment_Name}.Types_of_Funds(Types_of_Funds_id),
@@ -173,13 +173,13 @@ function User_Payments(Apartment_Name) {
 
 function Payment_Documents(Apartment_Name) {
   return `CREATE TABLE ${Apartment_Name}.Payment_Documents(
-    Payment_Document_Id VARCHAR(255) PRIMARY KEY,
+    Payment_Document_Id SERIAL PRIMARY KEY,
     Payment_Document_Name VARCHAR(255) NOT NULL,
-    Document_Link JSONB NOT NULL,
-    Uploaded_Date DATE NOT NULL,
-    Owner_id INT NOT NULL,
-    CONSTRAINT fk_payment_documents_owner_id FOREIGN KEY (Owner_id) REFERENCES ${Apartment_Name}.User(User_Id));`;
+    document_type varchar(255) NOT NULL,
+    Uploaded_Date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP );`;
 }
+// Owner_id INT NOT NULL,
+//CONSTRAINT fk_payment_documents_owner_id FOREIGN KEY (Owner_id) REFERENCES ${Apartment_Name}.User(User_Id)
 
 function Alter_User_Payments(Apartment_Name) {
   return `ALTER TABLE ${Apartment_Name}.User_Payments ADD CONSTRAINT 

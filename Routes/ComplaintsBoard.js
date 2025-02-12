@@ -46,7 +46,6 @@ router.post("/create-complaint/:id", async (req, res) => {
   console.log(querry);
   try {
     const result = await db.query(querry, values);
-
     res.status(200).json(result.rows);
   } catch (error) {
     console.log(error);

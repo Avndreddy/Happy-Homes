@@ -117,7 +117,6 @@ router.put("/update-types-of-funds/:id/:cid", verifyToken, async (req, res) => {
     }
   });
 
-
   const query = `UPDATE ${Apartment_Name}.Types_of_Funds SET ${keys.join(
     ", "
   )} WHERE types_of_funds_id = ${types_of_funds_id} returning *`;
@@ -131,29 +130,29 @@ router.put("/update-types-of-funds/:id/:cid", verifyToken, async (req, res) => {
   }
 });
 
-router.get('/get-fund-type/:id', verifyToken, async (req, res) => {
-    const id = req.params.id;
-    const {Apartment_Name} = req.body;
-    const query = `SELECT * FROM ${Apartment_Name}.Types_of_Funds WHERE types_of_funds_id = $1`;
-    try {
-        const result = await db.query(query, [id]);
-        res.status(200).json(result.rows);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: "Error fetching fund type" });
-            }
-})
+router.get("/get-fund-type/:id", verifyToken, async (req, res) => {
+  const id = req.params.id;
+  const { Apartment_Name } = req.body;
+  const query = `SELECT * FROM ${Apartment_Name}.Types_of_Funds WHERE types_of_funds_id = $1`;
+  try {
+    const result = await db.query(query, [id]);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching fund type" });
+  }
+});
 
-router.get('/get-all-fund-type', verifyToken, async (req, res) => {
-    const {Apartment_Name} = req.body;
-    const query = `SELECT * FROM ${Apartment_Name}.Types_of_Funds`;
-    try {
-        const result = await db.query(query);
-        res.status(200).json(result.rows);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: "Error fetching fund type" });
-            }
-})
+router.get("/get-all-fund-type", verifyToken, async (req, res) => {
+  const { Apartment_Name } = req.body;
+  const query = `SELECT * FROM ${Apartment_Name}.Types_of_Funds`;
+  try {
+    const result = await db.query(query);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching fund type" });
+  }
+});
 
 module.exports = router;

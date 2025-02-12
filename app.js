@@ -13,6 +13,9 @@ const createFile= require('./SampleUpload');
 const Notice_Board= require('./Routes/Committee_Member/NoticeBoard');
 const Compalints_Board = require('./Routes/ComplaintsBoard');
 const Funds = require('./Routes/Committee_Member/Create_Funds');
+const UserPayments = require('./Routes/Users/userPayments');
+const PaymentDocuments = require('./Routes/paymentDocuments');
+
 
 // Middlewares
 app.use(express.json());
@@ -35,6 +38,8 @@ app.use('/api',createFile)
 app.use('/api', Notice_Board)
 app.use('/api', Compalints_Board);
 app.use('/api', Funds);
+app.use('/api', UserPayments);
+app.use('/api', PaymentDocuments);
 
 // Start or Server Listening
 app.listen(process.env.Server_Port || 5000, () => {
